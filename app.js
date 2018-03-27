@@ -4,18 +4,13 @@ const _ = require('lodash');
 const yargs = require('yargs');
 const notes = require('./notes.js');
 
-// console.log(_.isString(true));
-// console.log(_.isString('pizza'));
 
-// let arry = _.uniq(['memo',1,'me',1,2,3,4]);
-// console.log(arry);
-
-const argv = yargs.argv;
+const argv = yargs
+            .command()
+            .argv;
 
 let command = process.argv[2];
 
-console.log("Command :",command);
-console.log("Yargs :",argv);
 
 if( command === 'add' ){
     let note = notes.addNote(argv.title,argv.body);
@@ -25,8 +20,12 @@ if( command === 'add' ){
     } else {
         console.log("Note title Taken");
     }
-}else if( command === 'list' ){
-    notes.getAll();
+} else if( command === 'list' ){
+    let allNotes = notes.getAll();
+    console.log(`A total of ${allNotes.length} were collected`);
+    allNotes.forEach((note)=>{
+        notes.logNote(note);
+    })
 } else if (command === 'read' ){
     let note = notes.readNote(argv.title);
     if(note){
@@ -35,11 +34,11 @@ if( command === 'add' ){
     }else{
         console.log("Note not found!!!");
     }
-}else if ( command = 'remove' ){
+} else if ( command = 'remove' ){
     let noteRemoved = notes.removeNote(argv.title);
     let message = noteRemoved ?  "Note Was Removed" : "Note Not Removed";
     console.log(message);
-}else{
+} else{
     console.log("Command Not Understood")
 };
 

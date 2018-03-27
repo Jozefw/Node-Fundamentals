@@ -1,5 +1,3 @@
-console.log("The file Notes.js, has launched");
-
 const fs = require('fs');
 
 const fetchNotes = () =>{
@@ -48,7 +46,7 @@ let removeNote = (title)=>{
 }
 
 let getAll = ()=>{
-    console.log("Getting All Notes");
+    return fetchNotes();
 }
 
 let logNote = (note) => {
